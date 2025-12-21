@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='impressum.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('index') }}">Zurück zur Startseite</a>
+    </header>
+    <div class="impressum">
+        <h1>Impressum</h1>
+
+        <section class="diensteanbieter">
+            <h2>Diensteanbieter</h2>
+            <p>Max Mustermann</p>
+            <p>Musterstraße 12</p>
+            <p>12345 Musterstadt</p>
+            <p>Deutschland</p>
+        </section>
+
+        <section class="kontaktmoeglichkeiten">
+            <h2>Kontaktmöglichkeiten</h2>
+            <p>E-Mail-Adresse: <a href="mailto:max.mustermann@example.de">max.mustermann@example.de</a></p>
+        </section>
+
+        <section class="haftungshinweise">
+            <h2>Haftungs- und Schutzrechtshinweise</h2>
+            <div class="haftungsausschluss">
+                <h3>Haftungsausschluss</h3>
+                <p>Wir sind für die Inhalte unserer Internetseiten nach den Maßgaben der allgemeinen Gesetze verantwortlich. Alle Inhalte werden mit der gebotenen Sorgfalt und nach bestem Wissen erstellt und dienen lediglich rein informativen Zwecken. Rechtlich bindend sind nur solche Inhalte, bei denen es sich um gesetzlich vorgeschriebene Angaben (z. B. Impressum, Datenschutzerklärung, AGB oder Verbraucherbelehrungen) handelt.</p>
+            </div>
+
+            <div class="links">
+                <h3>Links auf fremde Webseiten</h3>
+                <p>Soweit wir auf unseren Internetseiten mittels Hyperlinks auf Internetseiten Dritter verweisen, können wir keine Gewähr für die fortwährende Aktualität, Richtigkeit und Vollständigkeit der verlinkten Inhalte übernehmen, da diese Inhalte außerhalb unseres Verantwortungsbereichs liegen und wir auf die zukünftige Gestaltung keinen Einfluss haben. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Inhalten nach den allgemeinen Gesetzen werden hiervon nicht berührt. </p>
+            </div>
+
+            <div class="urheberrechte">
+                <h3>Urheberrechte und Markenrechte</h3>
+                <p>Alle auf dieser Internetseite vorhandenen Texte, Bilder, Fotos, Videos oder Grafiken unterliegen in der Regel dem Schutz des Urheberrechts. Jede unberechtigte Verwendung (insbesondere die Vervielfältigung, Bearbeitung oder Verbreitung) dieser urheberrechtsgeschützten Inhalte ist daher untersagt. Dies gilt insbesondere für die kommerzielle Nutzung solcher Inhalte. Wenn Sie beabsichtigen, diese Inhalte oder Teile davon zu verwenden, kontaktieren Sie uns bitte im Voraus unter den obenstehenden Angaben. Soweit wir nicht selbst Inhaber der benötigten urheberrechtlichen Nutzungsrechte sein sollten, bemühen wir uns, einen Kontakt zum Berechtigten zu vermitteln.</p>
+            </div>
+
+            <div class="hinweise">
+                <h3>Hinweise auf Rechtsverstöße</h3>
+                <p>Sollten Sie auf unserer Internetseite auf mögliche Rechtsverstöße aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Sobald wir Kenntnis von rechtswidrigen Inhalten oder Links erhalten, werden wir diese umgehend entfernen.</p>
+            </div>
+        </section>
+
+        <section class="bildnachweise">
+            <h2>Bildnachweise</h2>
+        </section>
+        
+    </div>
+</body>
+</html>

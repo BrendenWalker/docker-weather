@@ -1,0 +1,133 @@
+/* General Styles */
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/static/fonts/OpenSans-Regular.ttf') format('truetype');
+}
+  
+@font-face {
+    font-family: 'Open Sans';
+    font-style: semibold;
+    font-weight: 600;
+    src: url('/static/fonts/OpenSans-SemiBold.ttf') format('truetype');
+}
+  
+@font-face {
+    font-family: 'Open Sans';
+    font-style: bold;
+    font-weight: 700;
+    src: url('/static/fonts/OpenSans-Bold.ttf') format('truetype');
+}
+
+body {
+    font-family: "Open Sans";
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #fff;
+    counter-reset: h2-counter; /* Zähler für h2-Überschriften initialisieren */
+}
+
+.impressum {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0px;
+    counter-increment: h2-counter; /* Zähler für jede h2-Überschrift erhöhen */
+    position: relative; /* Für die Positionierung der Nummer */
+    padding-left: 40px; /* Platz für die römische Zahl schaffen */
+    counter-reset: h3-counter; /* Zähler für h3-Überschriften bei jedem neuen h2 zurücksetzen */
+}
+
+h2::before {
+    content: counter(h2-counter, upper-roman) ". "; /* Römische Zahl vor der Überschrift */
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1em; /* Schriftgröße an den Text anpassen */
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    position: relative; /* Für die Positionierung der Nummer */
+    padding-left: 30px; /* Platz für die arabische Zahl schaffen */
+    counter-increment: h3-counter; /* Zähler für jede h3-Überschrift erhöhen */
+}
+
+h3::before {
+    content: counter(h3-counter) ". "; /* Arabische Zahl vor der Überschrift */
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+}
+
+p {
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 1em; /* Sicherstellen, dass die Standard-Textgröße 1em ist */
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.diensteanbieter,
+.kontaktmoeglichkeiten,
+.haftungshinweise {
+    margin-bottom: 30px;
+}
+
+.diensteanbieter h2 {
+    margin-bottom: 15px;
+}
+
+.diensteanbieter p {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-left: 40px;
+}
+
+.kontaktmoeglichkeiten p {
+    margin-left: 40px;
+}
+
+.haftungsausschluss p,
+.links p,
+.urheberrechte p,
+.hinweise p {
+    margin-left: 50px; /* Einrückung des Textes unterhalb der h3 */
+    margin-top: 1px;
+    margin-bottom: 20px; /* Etwas weniger Abstand nach unten */
+    text-align: justify;
+}
+
+.bildnachweise p {
+    font-size: 0.9em;
+    color: #777;
+}
