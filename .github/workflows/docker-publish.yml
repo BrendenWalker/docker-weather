@@ -40,14 +40,14 @@ jobs:
           VERSION=${{ steps.version.outputs.version }}
           IS_PRERELEASE=${{ steps.version.outputs.is_prerelease }}
 
-          TAGS="${{ secrets.DOCKERHUB_USERNAME }}/docker_weather:$VERSION"
+          TAGS="${{ secrets.DOCKERHUB_USERNAME }}/weather_dashboard:$VERSION"
 
           if [ "$IS_PRERELEASE" = "false" ]; then
             MAJOR=$(echo $VERSION | cut -d. -f1)
             MINOR=$(echo $VERSION | cut -d. -f2)
-            TAGS="$TAGS,${{ secrets.DOCKERHUB_USERNAME }}/docker_weather:$MAJOR.$MINOR"
-            TAGS="$TAGS,${{ secrets.DOCKERHUB_USERNAME }}/docker_weather:$MAJOR"
-            TAGS="$TAGS,${{ secrets.DOCKERHUB_USERNAME }}/docker_weather:latest"
+            TAGS="$TAGS,${{ secrets.DOCKERHUB_USERNAME }}/weather_dashboard:$MAJOR.$MINOR"
+            TAGS="$TAGS,${{ secrets.DOCKERHUB_USERNAME }}/weather_dashboard:$MAJOR"
+            TAGS="$TAGS,${{ secrets.DOCKERHUB_USERNAME }}/weather_dashboard:latest"
           fi
 
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
