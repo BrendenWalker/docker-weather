@@ -16,7 +16,7 @@ EXPOSE 5000
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask", "--app", "app.app", "run", "--host=0.0.0.0"]
 
 LABEL org.opencontainers.image.title="Watchless" \
       org.opencontainers.image.version="1.0-beta" \
