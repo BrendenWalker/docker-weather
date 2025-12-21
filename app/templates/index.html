@@ -1,122 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docker Weather Dashboard</title>
+    <title>Weather Dashboard</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <nav class="menu">
-        <button class="menu-button"><i class="fas fa-bars"></i> Menu</button>
-        <ul class="menu-list">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('impressum') }}">Impressum</a></li>
-            <li><a href="{{ url_for('datenschutz') }}">Datenschutz</a></li>
-        </ul>
-    </nav>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-cloud-sun"></i> Weather Dashboard</h1>
-            <div class="location-info">
-                <h2>{{ location_name }}</h2>
-                <div class="last-updated">Last updated: {{ weather.current.time }}</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-cloud-sun"></i> WeatherNow
             </div>
-        </header>
-        
-        <div class="current-weather">
-            <div class="weather-card">
-                <div class="weather-main">
-                    <div class="weather-icon">
-                        <img src="http://openweathermap.org/img/wn/{{ weather.current.icon }}@2x.png" alt="{{ weather.current.weather }}">
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ url_for('impressum') }}"><i class="fas fa-info-circle"></i> Impressum</a></li>
+                <li><a href="{{ url_for('datenschutz') }}"><i class="fas fa-shield-alt"></i> Datenschutz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Weather Dashboard</h1>
+            <p class="location">
+                <i class="fas fa-map-marker-alt"></i> {{ location_name }}
+            </p>
+            <p class="last-updated">
+                <i class="fas fa-clock"></i> Last updated: {{ weather.current.time }}
+            </p>
+        </div>
+
+        <!-- Current Weather -->
+        <div class="current-weather glass-card">
+            <div class="weather-main-card">
+                <div class="weather-header">
+                    <div class="temp-display">
+                        <img src="http://openweathermap.org/img/wn/{{ weather.current.icon }}@2x.png" alt="{{ weather.current.weather }}" class="weather-icon-large">
+                        <div class="temp-info">
+                            <div class="main-temp">{{ weather.current.temp }}°</div>
+                            <div class="feels-like">Feels like {{ weather.current.feels_like }}°C</div>
+                            <div class="condition">{{ weather.current.weather }}</div>
+                        </div>
                     </div>
-                    <div class="temp">{{ weather.current.temp }}°C</div>
                 </div>
-                <div class="weather-details">
-                    <div><span>Condition:</span> {{ weather.current.weather }}</div>
-                    <div><span>Humidity:</span> {{ weather.current.humidity }}%</div>
-                    <div><span>UV Index:</span> {{ weather.current.uvi }}</div>
-                    <div><span>Wind Speed:</span> {{ weather.current.wind_speed }} m/s</div>
-                    <div><span>Feels Like:</span> {{ weather.current.feels_like }}°C</div>
-                    <div><span>Pressure:</span> {{ weather.current.pressure }} hPa</div>
+
+                <!-- Weather Stats -->
+                <div class="weather-stats">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <span class="stat-label">Humidity</span>
+                        </div>
+                        <div class="stat-value">{{ weather.current.humidity }}%</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <span class="stat-label">Wind Speed</span>
+                        </div>
+                        <div class="stat-value">{{ weather.current.wind_speed }} m/s</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-compress-arrows-alt"></i>
+                            </div>
+                            <span class="stat-label">Pressure</span>
+                        </div>
+                        <div class="stat-value">{{ weather.current.pressure }} hPa</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <span class="stat-label">UV Index</span>
+                        </div>
+                        <div class="stat-value">{{ weather.current.uvi }}</div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="hourly-forecast">
-            <h2><i class="fas fa-clock"></i> 36-Hour Forecast</h2>
-            <div class="forecast-scroller">
-                <button class="scroll-button left" onclick="scrollForecast(-300)" aria-label="Scroll left">
+
+        <!-- Hourly Forecast -->
+        <div class="forecast-section">
+            <div class="section-header">
+                <i class="fas fa-clock"></i>
+                <h2>36-Hour Forecast</h2>
+            </div>
+
+            <div class="forecast-container-wrapper">
+                <button class="scroll-btn left" onclick="scrollForecast(-300)">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <div class="forecast-container" id="forecastContainer">
+
+                <div class="forecast-scroll" id="forecastScroll">
+                    <!-- Hour Cards -->
                     {% for hour in weather.hourly %}
                     <div class="hour-card">
                         <div class="hour-time">{{ hour.time }}</div>
-                        <img src="http://openweathermap.org/img/wn/{{ hour.icon }}.png" alt="{{ hour.weather }}">
-                        <div class="hour-temp">{{ hour.temp }}°C</div>
+                        <img src="http://openweathermap.org/img/wn/{{ hour.icon }}.png" alt="{{ hour.weather }}" class="hour-icon">
+                        <div class="hour-temp">{{ hour.temp }}°</div>
                         <div class="hour-details">
-                            <div><i class="fas fa-tint"></i> {{ hour.humidity }}%</div>
-                            <div><i class="fas fa-wind"></i> {{ hour.wind_speed }} m/s</div>
-                            <div><i class="fas fa-umbrella"></i> {% if hour['pop'] > 0 %}{{ hour['pop'] }}%{% endif %}</div>
+                            <div class="hour-detail">
+                                <i class="fas fa-tint"></i> {{ hour.humidity }}%
+                            </div>
+                            <div class="hour-detail">
+                                <i class="fas fa-wind"></i> {{ hour.wind_speed }} m/s
+                            </div>
+                            {% if hour['pop'] > 0 %}
+                            <div class="hour-detail">
+                                <i class="fas fa-umbrella"></i> {{ hour['pop'] }}%
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-                <button class="scroll-button right" onclick="scrollForecast(300)" aria-label="Scroll right">
+
+                <button class="scroll-btn right" onclick="scrollForecast(300)">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
         </div>
+
+        <!-- Weather Widgets -->
+        <div class="widgets-section">
+            <div class="widgets-grid">
+                <div class="widget-card">
+                    <h2>
+                        <i class="fas fa-radar" style="color: var(--primary);"></i>
+                        Live Weather Radar
+                    </h2>
+                    <iframe 
+                        src="https://www.rainviewer.com/map.html?loc=49.939,11.560,7&oAP=1&c=5&o=50&layer=sat-rad&sm=1&sn=1&ts=1&marker=49.939,11.560,red-pushpin" 
+                        width="100%" 
+                        height="400" 
+                        frameborder="0" 
+                        style="border:0;border-radius:16px;" 
+                        allowfullscreen
+                        title="Live Weather Radar">
+                    </iframe>
+                </div>
+
+                <div class="widget-card">
+                    <h2>
+                        <i class="fas fa-video" style="color: var(--secondary);"></i>
+                        Live Webcam
+                    </h2>
+                    <div class="webcam-embed">
+                        <a 
+                            name="windy-webcam-timelapse-player" 
+                            data-id="1190793231" 
+                            data-play="day" 
+                            data-loop="0" 
+                            data-auto-play="0"
+                            data-force-full-screen-on-overlay-play="0"
+                            data-interactive="1" 
+                            href="https://windy.com/webcams/1190793231"
+                            target="_blank"
+                            style="color: var(--text-primary);">
+                            Webcam in der Bayreuther Fußgängerzone
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="weather-widgets">
-        <div id="radar-container">
-            <h2><i class="fas fa-radar"></i> Live Weather Radar</h2>
-            <iframe 
-                src="https://www.rainviewer.com/map.html?loc=49.939,11.560,7&oAP=1&c=5&o=50&layer=sat-rad&sm=1&sn=1&ts=1&marker=49.939,11.560,red-pushpin" 
-                width="100%" 
-                frameborder="0" 
-                style="border:0;height:50vh;" 
-                allowfullscreen
-                title="Live Weather Radar">
-            </iframe>
-        </div>
-
-        <div id="webcam-container">
-            <h2><i class="fas fa-video"></i> Live Webcam</h2>
-            <a 
-                name="windy-webcam-timelapse-player" 
-                data-id="1190793231" 
-                data-play="day" 
-                data-loop="0" 
-                data-auto-play="0"
-                data-force-full-screen-on-overlay-play="0"
-                data-interactive="1" href="https://windy.com/webcams/1190793231"
-                target="_blank">City: Webcam in der Bayreuther Fußgängerzone
-            </a>
-            <script 
-                async type="text/javascript"
-                src="https://webcams.windy.com/webcams/public/embed/v2/script/player.js"
-            ></script>
-        </div>
-    </div>
-
+    <script src="https://webcams.windy.com/webcams/public/embed/v2/script/player.js"></script>
     <script>
-        // Horizontal scrolling function
-        function scrollForecast(scrollAmount) {
-            const container = document.getElementById('forecastContainer');
+        function scrollForecast(amount) {
+            const container = document.getElementById('forecastScroll');
             container.scrollBy({
-                left: scrollAmount,
+                left: amount,
                 behavior: 'smooth'
             });
         }
 
-        // Touch and drag support
-        const container = document.getElementById('forecastContainer');
+        // Touch drag support
+        const container = document.getElementById('forecastScroll');
         let isDown = false;
         let startX;
         let scrollLeft;
@@ -139,7 +221,7 @@
         });
 
         container.addEventListener('mousemove', (e) => {
-            if(!isDown) return;
+            if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - container.offsetLeft;
             const walk = (x - startX) * 2;
@@ -158,8 +240,7 @@
         });
 
         container.addEventListener('touchmove', (e) => {
-            if(!isDown) return;
-            e.preventDefault();
+            if (!isDown) return;
             const x = e.touches[0].pageX - container.offsetLeft;
             const walk = (x - startX) * 2;
             container.scrollLeft = scrollLeft - walk;

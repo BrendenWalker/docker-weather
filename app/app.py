@@ -1,4 +1,4 @@
-from flask import Flask, render_templatepi
+from flask import Flask, render_template
 import requests
 import os
 from datetime import datetime
