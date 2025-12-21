@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 1</title>
+    <title>Docker Weather Dashboard</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Page 1</h1>
-        <a href="{{ url_for('index') }}">Back to Home</a>
-    </header>
-    <p>This is Page 1 content.</p>
+    <nav class="menu">
+        <button class="menu-button"><i class="fas fa-bars"></i> Menu</button>
+        <ul class="menu-list">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('impressum') }}">Impressum</a></li>
+            <li><a href="{{ url_for('datenschutz') }}">Datenschutz</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <header>
+        </header>
+    </div>
 </body>
 </html>
