@@ -1,0 +1,15 @@
+services:
+  weather-app:
+    image: fish906/weather-dashboard:latest
+    container_name: weather_dashboard
+    ports:
+      - "5000:5000"
+    environment:
+      - API_KEY=<YOUR_API_KEY>
+      - LATITUDE=<YOUR_LAT>
+      - LONGITUDE=<YOUR_LON>
+      - UNITS=metric # 'metric' or 'imperial'
+      - LOCATION_NAME=<YOUR_CITY> # Replace with your city Name to have it displayed on the Dashboard
+      - WEBCAM_ID=<YOUR_WEBCAM_ID> # see windy.com
+      - RADAR_IFRAME=<YOUR_LINK> # see github repository for info
+    restart: unless-stopped

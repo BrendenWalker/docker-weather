@@ -34,7 +34,7 @@ def get_weather_data() -> Dict[str, Any]:
     try:
         units = os.getenv('UNITS', 'metric')
         url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,daily,alerts&units={units}&appid={api_key}"
-        response = requests.get(url, timeout=10)  # Add timeout
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
         return response.json()
     
@@ -80,7 +80,7 @@ def process_weather_data(data: Dict[str, Any]) -> Dict[str, Any]:
             'wind_speed': current.get('wind_speed', 'N/A'),
             'weather': current.get('weather', [{}])[0].get('main', 'N/A'),
             'icon': current.get('weather', [{}])[0].get('icon', ''),
-            'time': datetime.fromtimestamp(current.get('dt', 0)).strftime('%H:%M %d/%m')
+            'time': datetime.fromtimestamp(current.get('dt', 0)).strftime('%H:%M %d.%m.%Y')
         },
         'hourly': []
     }
@@ -94,7 +94,7 @@ def process_weather_data(data: Dict[str, Any]) -> Dict[str, Any]:
             'wind_speed': hour_copy.get('wind_speed', 'N/A'),
             'weather': hour_copy.get('weather', [{}])[0].get('main', 'N/A'),
             'icon': hour_copy.get('weather', [{}])[0].get('icon', ''),
-            'pop': safe_extract_pop(hour_copy)  # Get the processed integer
+            'pop': safe_extract_pop(hour_copy)
         }
         processed['hourly'].append(processed_hour)
 
@@ -105,6 +105,8 @@ def index():
     raw_data = get_weather_data()
     weather_data = process_weather_data(raw_data)
     location_name = os.getenv('LOCATION_NAME', 'Your Location')
+    webcam_id = os.getenv("WEBCAM_ID", None)
+    iframe_url = os.getenv("RADAR_IFRAME")
     
     if weather_data['hourly']:
         logger.info(f"Sample pop values: {[hour['pop'] for hour in weather_data['hourly'][:3]]}")
@@ -112,7 +114,9 @@ def index():
     return render_template(
         'index.html', 
         weather=weather_data,
-        location_name=location_name
+        location_name=location_name,
+        webcam_id=webcam_id,
+        iframe_url=iframe_url
         )
 
 @app.route("/impressum")
@@ -124,4 +128,4 @@ def datenschutz():
     return render_template("datenschutz.html")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
