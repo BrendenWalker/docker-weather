@@ -18,6 +18,6 @@ ENV FLASK_ENV=production
 
 CMD ["flask", "--app", "app.app", "run", "--host=0.0.0.0"]
 
-LABEL org.opencontainers.image.title="Watchless" \
-      org.opencontainers.image.version="1.0-beta" \
-      org.opencontainers.image.source="https://github.com/fish906/watchless"
+LABEL org.opencontainers.image.title="Docker Weather Dashboard" \
+      org.opencontainers.image.version="2.1.2" \
+      org.opencontainers.image.source="https://github.com/fish906/weather-dashboard"
