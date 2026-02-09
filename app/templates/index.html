@@ -36,116 +36,96 @@
         <!-- Hero Section -->
         <div class="hero">
             <h1>Weather Dashboard</h1>
-            <p class="location">
-                <i class="fas fa-map-marker-alt"></i> {{ location_name }}
-            </p>
-            <p class="last-updated">
-                <i class="fas fa-clock"></i> Last updated: {{ weather.current.time }}
-            </p>
+            {% if is_multi_location %}
+                <p class="location">
+                    <i class="fas fa-map-marker-alt"></i> Multiple Locations
+                </p>
+            {% endif %}
         </div>
 
-        <!-- Current Weather -->
-        <div class="current-weather glass-card">
-            <div class="weather-main-card">
-                <div class="weather-header">
-                    <div class="temp-display">
-                        <img src="http://openweathermap.org/img/wn/{{ weather.current.icon }}@2x.png" alt="{{ weather.current.weather }}" class="weather-icon-large">
+        <!-- Locations Grid -->
+        <div class="locations-grid">
+            {% for loc in locations %}
+            <div class="location-card glass-card">
+                <div class="location-header">
+                    <div class="location-title">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ loc.name }}</span>
+                    </div>
+                    <div class="location-updated">
+                        <i class="fas fa-clock"></i>
+                        <span>{{ loc.weather.current.time }}</span>
+                    </div>
+                </div>
+
+                <!-- Current Weather Compact -->
+                <div class="location-current">
+                    <div class="location-current-main">
+                        <img src="http://openweathermap.org/img/wn/{{ loc.weather.current.icon }}@2x.png"
+                             alt="{{ loc.weather.current.weather }}"
+                             class="weather-icon-large">
                         <div class="temp-info">
-                            <div class="main-temp">{{ weather.current.temp }}°</div>
-                            <div class="feels-like">Feels like {{ weather.current.feels_like }}°C</div>
-                            <div class="condition">{{ weather.current.weather }}</div>
+                            <div class="main-temp">{{ loc.weather.current.temp }}°</div>
+                            <div class="feels-like">
+                                Feels like {{ loc.weather.current.feels_like }}°
+                            </div>
+                            <div class="condition">{{ loc.weather.current.weather }}</div>
+                        </div>
+                    </div>
+                    <div class="location-current-stats">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <span class="stat-label">Humidity</span>
+                            </div>
+                            <div class="stat-value">{{ loc.weather.current.humidity }}%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-wind"></i>
+                                </div>
+                                <span class="stat-label">Wind</span>
+                            </div>
+                            <div class="stat-value">{{ loc.weather.current.wind_speed }} m/s</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Weather Stats -->
-                <div class="weather-stats">
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-tint"></i>
-                            </div>
-                            <span class="stat-label">Humidity</span>
-                        </div>
-                        <div class="stat-value">{{ weather.current.humidity }}%</div>
+                <!-- 10-Day Forecast -->
+                <div class="daily-forecast-section">
+                    <div class="section-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h2>10-Day Forecast</h2>
                     </div>
-
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-wind"></i>
+                    <div class="daily-forecast-grid">
+                        {% for day in loc.weather.daily %}
+                        <div class="daily-card">
+                            <div class="daily-date">{{ day.date }}</div>
+                            <img src="http://openweathermap.org/img/wn/{{ day.icon }}.png"
+                                 alt="{{ day.weather }}"
+                                 class="daily-icon">
+                            <div class="daily-temps">
+                                <span class="daily-max">{{ day.temp_max }}°</span>
+                                <span class="daily-min">{{ day.temp_min }}°</span>
                             </div>
-                            <span class="stat-label">Wind Speed</span>
-                        </div>
-                        <div class="stat-value">{{ weather.current.wind_speed }} m/s</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-compress-arrows-alt"></i>
-                            </div>
-                            <span class="stat-label">Pressure</span>
-                        </div>
-                        <div class="stat-value">{{ weather.current.pressure }} hPa</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-sun"></i>
-                            </div>
-                            <span class="stat-label">UV Index</span>
-                        </div>
-                        <div class="stat-value">{{ weather.current.uvi }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Hourly Forecast -->
-        <div class="forecast-section">
-            <div class="section-header">
-                <i class="fas fa-clock"></i>
-                <h2>36-Hour Forecast</h2>
-            </div>
-
-            <div class="forecast-container-wrapper">
-                <button class="scroll-btn left" onclick="scrollForecast(-300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-
-                <div class="forecast-scroll" id="forecastScroll">
-                    <!-- Hour Cards -->
-                    {% for hour in weather.hourly %}
-                    <div class="hour-card">
-                        <div class="hour-time">{{ hour.time }}</div>
-                        <img src="http://openweathermap.org/img/wn/{{ hour.icon }}.png" alt="{{ hour.weather }}" class="hour-icon">
-                        <div class="hour-temp">{{ hour.temp }}°</div>
-                        <div class="hour-details">
-                            <div class="hour-detail">
-                                <i class="fas fa-tint"></i> {{ hour.humidity }}%
-                            </div>
-                            <div class="hour-detail">
-                                <i class="fas fa-wind"></i> {{ hour.wind_speed }} m/s
-                            </div>
-                            {% if hour['pop'] > 0 %}
-                            <div class="hour-detail">
-                                <i class="fas fa-umbrella"></i> {{ hour['pop'] }}%
+                            <div class="daily-condition">{{ day.weather }}</div>
+                            {% if day.pop > 0 %}
+                            <div class="daily-pop">
+                                <i class="fas fa-umbrella"></i> {{ day.pop }}%
                             </div>
                             {% endif %}
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
-
-                <button class="scroll-btn right" onclick="scrollForecast(300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
+            {% endfor %}
         </div>
 
-        <!-- Weather Widgets -->
+        <!-- Weather Widgets (global) -->
         <div class="widgets-section">
             <div class="widgets-grid">
                 <div class="widget-card">
@@ -190,63 +170,5 @@
     </div>
 
     <script src="https://webcams.windy.com/webcams/public/embed/v2/script/player.js"></script>
-    <script>
-        function scrollForecast(amount) {
-            const container = document.getElementById('forecastScroll');
-            container.scrollBy({
-                left: amount,
-                behavior: 'smooth'
-            });
-        }
-
-        // Touch drag support
-        const container = document.getElementById('forecastScroll');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        container.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - container.offsetLeft;
-            scrollLeft = container.scrollLeft;
-            container.style.cursor = 'grabbing';
-        });
-
-        container.addEventListener('mouseleave', () => {
-            isDown = false;
-            container.style.cursor = 'grab';
-        });
-
-        container.addEventListener('mouseup', () => {
-            isDown = false;
-            container.style.cursor = 'grab';
-        });
-
-        container.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - container.offsetLeft;
-            const walk = (x - startX) * 2;
-            container.scrollLeft = scrollLeft - walk;
-        });
-
-        // Touch support
-        container.addEventListener('touchstart', (e) => {
-            isDown = true;
-            startX = e.touches[0].pageX - container.offsetLeft;
-            scrollLeft = container.scrollLeft;
-        });
-
-        container.addEventListener('touchend', () => {
-            isDown = false;
-        });
-
-        container.addEventListener('touchmove', (e) => {
-            if (!isDown) return;
-            const x = e.touches[0].pageX - container.offsetLeft;
-            const walk = (x - startX) * 2;
-            container.scrollLeft = scrollLeft - walk;
-        });
-    </script>
 </body>
 </html>

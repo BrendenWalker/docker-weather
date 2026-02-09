@@ -34,10 +34,16 @@ services:
       - "5000:5000"
     environment:
       - API_KEY=<YOUR_API_KEY>
-      - LATITUDE=<YOUR_LAT>
-      - LONGITUDE=<YOUR_LON>
+      # Single location configuration (original)
+      # - LATITUDE=<YOUR_LAT>
+      # - LONGITUDE=<YOUR_LON>
+      # - LOCATION_NAME=<YOUR_CITY_NAME> # Display name on the dashboard
+
+      # Multi-location configuration (optional)
+      # Format: Name:LAT,LON;Name:LAT,LON;...
+      - LOCATIONS=Reno:39.5296,-119.8138;Barstow:34.8958,-117.0173;Lone Pine:36.6061,-118.0629;Lee Vining:37.9571,-119.1202;Bishop:37.3614,-118.3997;Hawthorne:38.5241,-118.6243
+
       - UNITS=metric # options are 'metric' and 'imperial'
-      - LOCATION_NAME=<YOUR_CITY_NAME # Replace with your city name to have it displayed on the Dashboard
     restart: unless-stopped
 ```
 
