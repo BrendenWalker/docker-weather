@@ -66,7 +66,7 @@ def _parse_locations() -> List[Dict[str, str]]:
             coords_part = part
 
         try:
-            lat_str, lon_str = [c.strip() for c in coords+part.split(",", 1)]
+            lat_str, lon_str = [c.strip() for c in coords_part.split(",", 1)]
         except ValueError:
             logger.error("Invalid location format in LOCATIONS: %s", part)
             continue
